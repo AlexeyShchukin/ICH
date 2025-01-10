@@ -14,12 +14,12 @@ class Calculator:
 
     def div_nums(self):
         if self.b == 0:
-            return 'На ноль делить нельзя'
+            return 'Division by zero is impossible'
         return self.a / self.b
 
     def div_rest(self):
         if self.b == 0:
-            return 'На ноль делить нельзя'
+            return 'Division by zero is impossible'
         return self.a % self.b
 
     def num_power(self):
