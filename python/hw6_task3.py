@@ -1,8 +1,9 @@
-n = int(input('Введите целое положительное число: '))
+n = int(input('Enter a positive integer: '))
 x = 2
 flag = True
 while x < n:
     if n % x == 0:
         flag = False
+        break
     x += 1
-print(f'Число {n} является простым.' if flag else f'Число {n} не является простым.')
+print(f'The number {n} {"is" if flag else "is not"} a prime number')
