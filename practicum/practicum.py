@@ -59,6 +59,7 @@ print(min_div(7))
 # Числа считываем с клавиатуры с помощью input()
 # (Проверку, является ли введённое значение числом, делать необязательно.)
 
+# 1
 res = 0
 while True:
     n = int(input())
@@ -68,10 +69,17 @@ while True:
         break
 print(res)
 
+# 2
+res = 0
+while n := int(input()):
+    res += n
+print(res)
+
 # 06. Усложняем предыдущую задачу.
 # Определите среднее значение всех элементов последовательности, завершающейся числом 0.
 # Среднее значение - сумма всех элементов, поделенная на их количество.
 
+# 1
 res = 0
 counter = 0
 while True:
@@ -83,30 +91,35 @@ while True:
         break
 print(round(res, 2))
 
+# 2
+res = 0
+counter = 0
+while n := int(input()):
+    counter += 1
+    res = (res + n) / counter
+print(round(res, 2))
+
 # 07. Последовательность состоит из натуральных чисел и завершается числом 0.
 # Определите значение наибольшего элемента последовательности.
 
-last = 0
-while True:
-    n = int(input())
-    if n:
-        last = n
-    else:
-        print(last)
-        break
+max_digit = 0
+while n := int(input()):
+    max_digit = n if n > max_digit else max_digit
+print(max_digit)
 
 # 08. Последовательность состоит из натуральных чисел и завершается числом 0.
 # Определите индекс наибольшего элемента последовательности.
 # Нумерация элементов начинается с нуля.
 
+max_digit = 0
+idx_max_digit = 0
 idx = -1
-while True:
-    n = int(input())
-    if n:
-        idx += 1
-    else:
-        print(idx)
-        break
+while n := int(input()):
+    idx += 1
+    if n > max_digit:
+        max_digit = n
+        idx_max_digit = idx
+print(idx_max_digit)
 
 # 09. Дан объём шара X куб. ед. Найдите радиус фигуры.
 #  V = 4 / 3 * pi * r ^ 3
@@ -143,9 +156,9 @@ print(n, char_quantity, round(n, char_quantity))
 # Функция вернет True, если выполняется равенство, иначе False.
 
 def eqv(a, b, c):
-    if a > b:
+    if a >= b:
         accuracy = a * 0.01 / 100
-    if b > a:
+    else:
         accuracy = b * 0.01 / 100
     return abs(c - (a + b)) <= accuracy
 
