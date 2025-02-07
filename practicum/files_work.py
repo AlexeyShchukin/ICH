@@ -17,9 +17,9 @@ Hello,
 """
 
 with open('input.txt', 'r', encoding='utf-8') as f:
-    for line in f.readlines():
-        words = line.split()
-        words.reverse()
-        with open('output.txt', 'a', encoding='utf-8') as out:
+    with open('output.txt', 'a', encoding='utf-8') as out:
+        for line in f.readlines():
+            words = line.split()
+            words.reverse()
             for word in words:
                 print(word, file=out)
