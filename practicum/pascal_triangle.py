@@ -11,17 +11,15 @@ from math import factorial as f
 
 def bk(n, k):
     """Расчёт биномиального коэффициента"""
-    res = f(n) // (f(k) * f(abs(n - k)))
-    return res
+    return f(n) // (f(k) * f(n - k))
 
 
 with open('num.txt', 'r') as file:
-    with open('pascal_triangle.txt', 'w') as pt:
-        num = int(file.read().strip())
-        L = len(str(bk(num - 1, num))) + 2
+    with open('pascal_triangle.txt', 'w', encoding='utf-8') as pt:
+        num = int(file.read().strip())  # считываем число из первого файла
+        longest = len(str(bk(num - 1, num // 2))) + 2  # длина самого большого числа в треугольнике
         for i in range(num):
-            print(end='' if i == 0 else '\n', file=pt)  # удаление первого переноса строки
-            print(' ' * (num - i - 1), end='', file=pt)  # выравнивание треугольника
-            print(' ' * (num - i - 1), end='', file=pt)
+            line = ''
             for j in range(i + 1):
-                print(f'{bk(i, j):<{L}d}', end=' ', file=pt)
+                line += f'{bk(i, j):^{longest}d}'  # центрируем числа по длине наибольшего числа и собираем в строку
+            print(line.center(longest * num), file=pt)  # центрируем строку по длине наибольшей строки
