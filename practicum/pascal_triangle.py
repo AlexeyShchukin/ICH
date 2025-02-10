@@ -19,7 +19,8 @@ with open('num.txt', 'r') as file:
     with open('pascal_triangle.txt', 'w') as pt:
         num = int(file.read().strip())
         for i in range(num):
-            print(end='' if i == 0 else '\n', file=pt)
-            print(' ' * (num - i), end='', file=pt)
+            print(end='' if i == 0 else '\n', file=pt) # удаление первого переноса строки
+            print(' ' * (num - i - 1), end='', file=pt)  # выравнивание треугольника
+            print(' ' * (num - i - 1), end='', file=pt)
             for j in range(i + 1):
                 print(f'{bk(i, j):<3d}', end=' ', file=pt)
