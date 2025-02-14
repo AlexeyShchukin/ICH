@@ -5,7 +5,6 @@
 ВАЖНО: Деление одного факториала на произведение двух других ВСЕГДА
 даёт целочисленный результат!
 """
-
 from math import factorial as f
 
 
@@ -14,12 +13,17 @@ def bk(n, k):
     return f(n) // (f(k) * f(n - k))
 
 
-with open('num.txt', 'r') as file:
+def pascal_triangle(num):
     with open('pascal_triangle.txt', 'w', encoding='utf-8') as pt:
-        num = int(file.read().strip())  # считываем число из первого файла
         longest = len(str(bk(num - 1, num // 2))) + 2  # длина самого большого числа в треугольнике
         for i in range(num):
             line = ''
             for j in range(i + 1):
                 line += f'{bk(i, j):^{longest}d}'  # центрируем числа по длине наибольшего числа и собираем в строку
             print(line.center(longest * num), file=pt)  # центрируем строку по длине наибольшей строки
+
+
+with open('practicum/num.txt', 'r') as file:
+    number = int(file.read().strip())  # считываем число из файла
+
+pascal_triangle(number)
