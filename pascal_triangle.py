@@ -23,7 +23,7 @@ def pascal_triangle(num):
             print(line.center(longest * num), file=pt)  # центрируем строку по длине наибольшей строки
 
 
-with open('practicum/num.txt', 'r') as file:
+with open('C:/python_projects/ICH/practicum/num.txt', 'r') as file:
     number = int(file.read().strip())  # считываем число из файла
 
 pascal_triangle(number)
