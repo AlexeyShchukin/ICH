@@ -27,11 +27,11 @@ def is_change_exist(cashbox: list, change: int) -> bool:
         return False
 
     for i in range(len(cashbox) - 1, -1, -1):  # проверяем купюры в касе, начиная с самых больших
-        if change - cashbox[i] == 0:  # если купюра равна сдаче
+        if cashbox[i] == change:  # если купюра равна сдаче
             cashbox.pop(i)  # забираем купюру и заканчиваем проверку кассы
             return True
-        elif change - cashbox[i] < 0:  # если купюра больше нужной сдачи
-            continue  # переходим к следующей в кассе
+        elif cashbox[i] > change:  # если купюра больше нужной сдачи
+            continue  # переходим к следующей купюре в кассе
         else:  # если купюра меньше нужной сдачи
             change -= cashbox[i]  # уменьшаем сдачу, забрав из кассы купюру
             cashbox.pop(i)
