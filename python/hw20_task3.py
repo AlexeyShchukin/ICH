@@ -17,4 +17,11 @@ def get_dict():
     return grades
 
 
+grades_of_students = {
+    'Alice': [85, 90, 92],
+    'Bob': [78, 80, 84],
+    'Carol': [92, 88, 95],
+}
+
+print(calculate_average_grade(grades_of_students))
 print(calculate_average_grade(get_dict()))
