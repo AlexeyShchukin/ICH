@@ -5,44 +5,41 @@
 и их количество.
 Пример вывода: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed lacinia est.
 Вывод:
-Sed: 2
-Lorem: 1"""
+sed: 2
+lorem: 1"""
 
-from collections import Counter
+from collections import Counter, OrderedDict
+
+original_text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sed lacinia est.'
 
 
-def count_words(s: str) -> dict:
-    mod_s = s.translate(str.maketrans('', '', ",:;!?'."))  # delete spec-symbols
-    mod_s_list = mod_s.split() # list of original words
-    mod_s_lower_list = mod_s.lower().split() # list of lowercase words
-    sorted_lower_s = Counter(mod_s_lower_list).most_common()  # list of sorted tuples like (key, value)
+def count_words(text: str) -> dict:
+    clean_text = ''
+    for char in text:
+        if char.isalpha() or char in (' ', '/n'):
+            clean_text += char
+    return {k: v for k, v in sorted(OrderedDict(Counter(clean_text.lower().split())).items(), key=lambda x: -x[1])}
+
+
+temp = set()
+for key, value in count_words(original_text).items():
+    if value not in temp:
+        print(f'{key}: {value}')
+        temp.add(value)
+
+
+def count_words2(text: str) -> dict:
+    clean_text = ''
+    for char in text:
+        if char.isalpha() or char in (' ', '/n'):
+            clean_text += char
     res = {}
-    for k, v in sorted_lower_s: # iterate over sorted tuples
-        original_word = mod_s_list[mod_s_lower_list.index(k)]
-        res[original_word] = v
+    for k, v in Counter(clean_text.lower().split()).most_common():  # tuples sorted in decreasing order
+        res[k] = v
         if v == 1:
             break
     return res
 
 
-if __name__ == '__main__':
-    for key, value in count_words(input('Enter a text: ')).items():
-        print(f'{key}: {value}')
-
-# Без учёта регистра всё проще:
-# from collections import Counter
-#
-#
-# def count_words(s: str) -> dict:
-#     mod_s = s.translate(str.maketrans('', '', ",:;!?'.")).lower() # delete spec-symbols, make lowercase
-#     res = {}
-#     for k, v in Counter(mod_s.split()).most_common(): # sorted tuples like (key, value)
-#         res[k] = v
-#         if v == 1:
-#             break
-#     return res
-#
-#
-# if __name__ == '__main__':
-#     for k, v in count_words(input('Enter a text: ')).items():
-#         print(f'{k}: {v}')
+for key, value in count_words2(original_text).items():
+    print(f'{key}: {value}')
