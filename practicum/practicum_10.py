@@ -1,4 +1,4 @@
-from collections import Counter
+from collections import Counter, defaultdict
 from pprint import pprint
 import json
 
@@ -132,8 +132,16 @@ def process_sales_data(func) -> dict[str, dict[str, int]]:
     return res
 
 
-pprint(process_sales_data(read_list_from_json_file('sales.json')))
+def process_sales_data2(func) -> dict[str, dict[str, int]]:
+    res = defaultdict(lambda: defaultdict(int))
+    for line in func:
+        name, title, amount = line.split('-')
+        res[name][title] += int(amount)
+    return dict(res)
 
+
+pprint(process_sales_data(read_list_from_json_file('sales.json')))
+pprint(process_sales_data2(read_list_from_json_file('sales.json')))
 # {'Alice': {'apple': 5, 'banana': 2, 'orange': 3},
 #  'Bob': {'apple': 2, 'banana': 7},
 #  'Charlie': {'apple': 1}}
