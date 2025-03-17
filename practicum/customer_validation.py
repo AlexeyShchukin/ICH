@@ -28,30 +28,16 @@ PS
 from collections import defaultdict
 from datetime import datetime
 from pprint import pprint
+from json import load
 
-users = [
-    ('', 'Doe', '2005-03-28', 'DE44443333222211110000'),  # Пустое имя
-    ('John', 'Smith', '2008-10-25', 'XE345678901234567890'),  # Возраст меньше 18 лет
-    ('Michael', 'Brown', '1990-05-15', 'DE89370400440532013000'),  # Все данные корректны
-    ('Anna', 'Johnson', '1985-12-07', '5511112222333344445555'),  # Первые два символа не буквы
-    ('Emily', 'Taylor', '1999-08-03', 'DE9876543210987654321A'),  # Часть из последних 20 символов - не цифры
-    ('', 'Taylor', '2020-08-03', '1465DE9876543210987654321A'),  # Все возможные ошибки
-    ('Robert', 'Davis', '1992-04-12', 'DE1234567890123456789012')  # Длина IBAN не равна 22 символам
-]
-
-
-# {'Anna_Johnson': ['IBANException: The first two characters must be letters!'],
-#  'Emily_Taylor': ['IBANException: The last twenty characters must be digits!'],
-#  'John_Smith': ["AgeException: The client's age cannot be less than 18 years!",
-#                 'IBANException: Incorrect Length of IBAN!'],
-#  'Michael_Brown': [],
-#  'Robert_Davis': ['IBANException: Incorrect Length of IBAN!'],
-#  '_Doe': ['NameException: Empty name or/and surname'],
-#  '_Taylor': ['NameException: Empty name or/and surname',
-#              "AgeException: The client's age cannot be less than 18 years!",
-#              'IBANException: Incorrect Length of IBAN!; The first two '
-#              'characters must be letters!; The last twenty characters must be '
-#              'digits!']}
+try:
+    with open('customers.json', 'r', encoding='utf-8') as file:
+        customers = load(file)
+        users = []
+        for customer in customers:
+            users.append(tuple(customer.values()))
+except FileNotFoundError as e:
+    print(f'{e.__class__.__name__}: {e}')
 
 
 class NameException(Exception):
@@ -131,7 +117,7 @@ def validate_customers(list_tuples: list[tuple[str, ...]]) -> dict[str, list[str
         except IBANException as e:
             d[f"{name}_{surname}"].append(f"{e.__class__.__name__}: {e}")
 
-    return d
+    return dict(d)
 
 
 def main():
