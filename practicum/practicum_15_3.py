@@ -91,6 +91,7 @@ if __name__ == '__main__':
 Area of Circle(name=circle, radius=5): 78.54
 с точностью до 2-го знака после запятой
 """
+print("02 ========================================================")
 
 figures = [
     Circle('circle', 5),
@@ -135,6 +136,7 @@ for obj in figures:
 Представьте, что у вас есть класс Coffee с полем цена и название. Декорировать этот класс по аналогии с предыдущей задачей, чтобы можно было получить кофе с молоком (стоит дороже), кофе с сахаром (цена остается такой же), двойной кофе (цена удваивается).
 
 """
+print("03 ========================================================")
 
 
 def with_sugar(func):
@@ -213,6 +215,7 @@ print()
 чтобы можно было получить кофе с молоком (стоит дороже),
 кофе с сахаром (цена остаётся такой же), двойной кофе (цена удваивается).
 """
+print("04 ========================================================")
 
 
 class Coffee:
@@ -224,49 +227,35 @@ class Coffee:
         return f"{self.name} (price: {self.price} euro)"
 
 
-def WithSugar():
-    def decorator(cls):
-        class Wrapped(cls):
-            def __init__(self, price, name):
-                super().__init__(price, name + " with sugar")
+class WithSugar:
+    def __call__(self, cls):  # делаем экземпляр класса вызываемым, принимающим оборачиваемый класс
+        class Wrapped(cls):  # обёртка наследует передаваемый класс
+            def __init__(self, price, name):  # определяем в ней новый конструктор,
+                # принимающий переданные значения при создании экземпляра передаваемого класса
+                super().__init__(price, name + " with sugar")  # передаем эти значения в конструктор класса родителя с изменениями
 
-            def __str__(self):
-                return f"{self.name} (price: {self.price} euro)"
-
-        return Wrapped
-
-    return decorator
+        return Wrapped  # возвращаем обертку наследника с новыми параметрами
 
 
-def WithMilk():
-    def decorator(cls):
+class WithMilk:
+    def __call__(self, cls):
         class Wrapped(cls):
             def __init__(self, price, name):
                 super().__init__(price + 2, name + " with milk")
 
-            def __str__(self):
-                return f"{self.name} (price: {self.price} euro)"
-
         return Wrapped
 
-    return decorator
 
-
-def DoubleCoffee():
-    def decorator(cls):
+class DoubleCoffee:
+    def __call__(self, cls):
         class Wrapped(cls):
             def __init__(self, price, name):
                 super().__init__(price * 2, "Double " + name)
 
-            def __str__(self):
-                return f"{self.name} (price: {self.price} euro)"
-
         return Wrapped
 
-    return decorator
 
-
-@WithSugar()
+@WithSugar()  # создается экземпляр класса
 class CoffeeWithSugar(Coffee):
     pass
 
@@ -300,6 +289,7 @@ print(coffee)
 
 # Coffee with suger
 coffee_with_sugar = CoffeeWithSugar(3, "Coffee")
+print(type(coffee_with_sugar))
 print(coffee_with_sugar)
 # Coffee with sugar (price: 3 euro)
 
