@@ -12,5 +12,10 @@ class DNA:
 
     def __add__(self, other):
         if isinstance(other, DNA):
-            return DNA("".join(((x or "") + (y or "") for x, y in zip_longest(self.sequence, other.sequence))))
+            result = ''.join(a + b for a, b in zip(self.sequence, other.sequence))
+            if self.length > other.length:
+                result += self.sequence[other.length:]
+            else:
+                result += other.sequence[self.length:]
+            return result
         return NotImplemented
