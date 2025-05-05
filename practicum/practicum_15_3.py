@@ -17,6 +17,7 @@ Circle, Square, Rectangle.
 Для каждого класса переопределить метод calculate_area(),
 который вычисляет площадь фигуры.
 """
+import functools
 from abc import abstractmethod
 from functools import wraps
 from math import pi as PI
@@ -226,6 +227,14 @@ class Coffee:
     def __str__(self):
         return f"{self.name} (price: {self.price} euro)"
 
+
+# class WithSugar:
+#     def __init__(self, cls):
+#         self.cls = cls
+#
+#     def __call__(self, price, name):
+#         res = self.cls(price, name + " with sugar")
+#         return res
 
 class WithSugar:
     def __call__(self, cls):  # делаем экземпляр класса вызываемым, принимающим оборачиваемый класс
