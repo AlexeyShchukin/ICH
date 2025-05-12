@@ -38,6 +38,6 @@ with connect(**dbconfig) as conn:
         res = cursor.fetchall()
         print(f"===== Purchases of User <{user}> : =====")
         if len(res[0]) == 1:
-            print("User {user_name} has no purchases")
+            print(f"User {user} has no purchases")
         else:
             print(*[e[1] for e in res], sep="\n")
