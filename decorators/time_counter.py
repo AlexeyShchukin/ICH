@@ -10,4 +10,5 @@ def time_counter(func):
         result = func(*args, **kwargs)
         print(f'======== Script execution time: {perf_counter() - start:.10f} ========')
         return result
+
     return decorator
